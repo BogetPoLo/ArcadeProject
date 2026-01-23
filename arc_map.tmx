@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="1">
+ <tileset firstgid="1" source="texture_arc.tsx"/>
+ <layer id="1" name="floor_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1TsSgCAMhOFwSHvvfwp7xyEIBjbyF1uy8DE8ipkV4uYwO+9ZvaZMjqd5a8GBY6bjbU9PcGgFh1ZwtHfh0HJ4vaP/2Kx/8I+OiHPRun+17t5xX64FRy5HxFs42hlxv3DgyO7wunZwKL2Bag6yXy7GK/v0
+  </data>
+ </layer>
+ <layer id="3" name="grass_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztmI0RgyAMhRmlO3QB3eRN4AwdxVEYxVEKNbQxF/lRrNr63XkIxpcnQdvDmHwg+h21rRKrjWl0Y2yj6Wt572N871rbibhYX9OWYy27B2wsRYh1nuDib+Fw/T74IN9DGHPnVuZP9XNpp57e81Wqw+r7MOLc14xqZ6VXWYel+Plk81WsC9H33vE5b0IOqpXN1VlCy9pcPe15aS15zwOtJ2uYZmrNr4Hq/dLNfb+PCs3hoveiJtgz+Qqwt4FKyO/92an17b1Yz1WLKdjbAAFTpza/Vl+ItvS+XI42b0fzI8n1h4o5Na2Ujxr/PTUNmZdra9e2qufR10kp2NvACdlqDWAj3X8AG+l+433HSbXPTKyusWuY6Wv3yNiUdimafoyUx5iedo32Ff0eCvg+Z+y3OpVLjsc8lTD37P7g+4pyT0vLz8dy9g5k7if+t0QR
+  </data>
+ </layer>
+ <layer id="2" name="wall_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztV8sNwyAM5Zzce84oHSEjMEpHySgdpaOUKkpELf8xSqrmSUgNn2ce2NhNqR/mlF5jSk/YSn/uaDYcZc8L0Z972p2Rs5Mad7ZH6aDsCmuyle/SoUOUjs0/h9Kqebsvlv5s9V+LT0fp8PB4QN0rZf8GWg3sbOt76AmPDiM/yhMNjQ7uDhT8iziJsGOxa70PD5cW1jPS2P5nHcO67qsNgfHB6fTooPh6v7tH6ij5aUHuaEf5/YDjYC45XnF87FB7InVQkOKjqt33eeOq85OP7959eOohL5/E2RKnnF3MH7DYrWObulvNnqi9zILfaexq9mN5az06WsH9j6prJq5ehTUop6O17vXElzZfwTPu+QZHvrsIRwbfJGcrIvO5xK3l9NQnZ9BhrW23NZwtySbGQSHSr8o7MHF126/okLiY/EPmQW2D+ekIHT2gyc3MmUwcFxy/cB68AWVQhyA=
+  </data>
+ </layer>
+ <layer id="9" name="all_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1bsNwCAMRdE3SFaJ2IEJMlpGyWiB1lWk2BhZ95QUYPwBCQBq6NkBFLBTDneKBVjhT897zMvXPZhNAKgj400/pCfhWHczd+MuV3YcVlRN+f/jNOm2a+eiOaGuQIwXIgEHDQ==
+  </data>
+ </layer>
+ <layer id="10" name="wall_coll" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlksOwCAIBb1y77/p3liU4eGn8SVdWcABCi0lT4/xnKSv+2ZzWPkjuV3JobS5HDGpOFo9R3uW9LSSY4a8HFYOVs5VwqHwr9bIfSP59bxPZ7oVRz2vsu0vR9sm8ztX7yePzZ84rBop9t6MPVifWxz0HiTn1B+Np+Dw1DQy462zyL9VTzUHsfOcRUTrYeUpUn9aE0XuPBxejfrenaMXSxmTcihn5UwOMn9O7Ss6Q3bkIL4Vc3AHjgypc6LY6Vf5egEZVIf1
+  </data>
+ </layer>
+ <layer id="5" name="chest_tree_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKACAIRFFv1f1vFu6kVZsxG/4D1zEGaRG4sUr9ruboyqM8x+FOkksOAJiANxXw1LFTnju/yx8AAKDxcka4zydFPveeYYYNwwAETQ==
+  </data>
+ </layer>
+ <layer id="6" name="chest_two_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEKACAIBdCu4/0v2NIUNLSI2XsgOPpBHYNbsep1HTJAVbEVkMfN8Ysuu14pR2x9pdn4kz0EsnT5Nacc/imZJk3HAww=
+  </data>
+ </layer>
+ <layer id="7" name="chest_one_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1rENACAIRFH2YP89LU2sxIic+l9jZeIFApoBWvzQnWw/5wCi6DMd1ELb6m5Rq2vkTW6aGdD5cAKosWtWZszdV+bDKzlwv4q/Ef0PzGvrFwLa
+  </data>
+ </layer>
+</map>
