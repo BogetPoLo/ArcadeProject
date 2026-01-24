@@ -23,7 +23,7 @@
  </layer>
  <layer id="10" name="wall_coll" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJztlksOwCAIBb1y77/p3liU4eGn8SVdWcABCi0lT4/xnKSv+2ZzWPkjuV3JobS5HDGpOFo9R3uW9LSSY4a8HFYOVs5VwqHwr9bIfSP59bxPZ7oVRz2vsu0vR9sm8ztX7yePzZ84rBop9t6MPVifWxz0HiTn1B+Np+Dw1DQy462zyL9VTzUHsfOcRUTrYeUpUn9aE0XuPBxejfrenaMXSxmTcihn5UwOMn9O7Ss6Q3bkIL4Vc3AHjgypc6LY6Vf5egEZVIf1
+   eJztlssNhDAMRN0UbVADpW0plAZIywVt/BmPISyMlAuRYz/HDIjUaVTWndSqt5pD6x/S2ys5mDEvR04sjl8zN4jM+0Ln1zvTTI4zFOXQenClryIcEa2z8wmGQPLUm+lvhAP1dFH2kXlYa56AsFROK/bJHNXvOfv7FIn5Jw7rfqz3e2isY3yUoyWPp3zrmvZnm59l60B6jp6H5mNweLyc4fHaXubfytKRA4mL7GWE3of1/4XmQ++E0bsIR1Tes3vnsHIxc6IcTK88kwPxn7vOFeohPXIgZzN8sAeOCrF7wvimv6rXAm1uYQY=
   </data>
  </layer>
  <layer id="5" name="chest_tree_tex" width="50" height="30">
