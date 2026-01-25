@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="11" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="1">
  <tileset firstgid="1" source="texture_arc.tsx"/>
  <layer id="1" name="floor_tex" width="50" height="30">
   <data encoding="base64" compression="zlib">
@@ -26,6 +26,21 @@
    eJztlssNhDAMRN0UbVADpW0plAZIywVt/BmPISyMlAuRYz/HDIjUaVTWndSqt5pD6x/S2ys5mDEvR04sjl8zN4jM+0Ln1zvTTI4zFOXQenClryIcEa2z8wmGQPLUm+lvhAP1dFH2kXlYa56AsFROK/bJHNXvOfv7FIn5Jw7rfqz3e2isY3yUoyWPp3zrmvZnm59l60B6jp6H5mNweLyc4fHaXubfytKRA4mL7GWE3of1/4XmQ++E0bsIR1Tes3vnsHIxc6IcTK88kwPxn7vOFeohPXIgZzN8sAeOCrF7wvimv6rXAm1uYQY=
   </data>
  </layer>
+ <layer id="12" name="chest_two_coll" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1LEKACAIBcB+2v9vaQoaWsTsDgRHH6hjcCtWva5DBqgqtgLyuDl+0WXXK+WIra80G3+yh0CWLr/mlMM/JdMESGIIsA==
+  </data>
+ </layer>
+ <layer id="13" name="chest_tree_coll" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKACAIRFHv3P0h3EmrNmM2/AeuYwzSInBjlfpdzdGVR3mOw50klxwAMAFvKuCpY6c8d36XPwAAQOPljHCfT4p87j3DDBvyjgj9
+  </data>
+ </layer>
+ <layer id="11" name="chest_one_coll" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1kEKACAIRFFv7fVbBq0yMqf6b9MqaFA0M0CLH7qT7eccQBR9poNaaFvdLWp1jbzJTTMDOh9OADV2zcqMufvKfHglB+5X8Tei/4F5DS5DDI4=
+  </data>
+ </layer>
  <layer id="5" name="chest_tree_tex" width="50" height="30">
   <data encoding="base64" compression="zlib">
    eJzt10EKACAIRFFv1f1vFu6kVZsxG/4D1zEGaRG4sUr9ruboyqM8x+FOkksOAJiANxXw1LFTnju/yx8AAKDxcka4zydFPveeYYYNwwAETQ==
@@ -38,7 +53,7 @@
  </layer>
  <layer id="7" name="chest_one_tex" width="50" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt1rENACAIRFH2YP89LU2sxIic+l9jZeIFApoBWvzQnWw/5wCi6DMd1ELb6m5Rq2vkTW6aGdD5cAKosWtWZszdV+bDKzlwv4q/Ef0PzGvrFwLa
+   eJzt1rEKACAIRVF/2P9fG4OmjMxX3bM0BT0UzQzQ4ofuZPs5BxBFn+mgFtpWd4taXSNvctPMgM6HE0CNXbMyY+6+Mh9eyYH7VfyN6H9gXgOm8AuA
   </data>
  </layer>
 </map>

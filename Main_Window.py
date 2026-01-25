@@ -1,92 +1,29 @@
 # ! - означает, что эта часть кода не доделана
+import math
+
 import arcade
+from pyglet.graphics import Batch
+from main_character import MainCharacter
+from bullet import Bullet
 
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 640
+
 ANIMATION_SPEED = 0.2
-# DEAD_ZONE_W = 10
-# DEAD_ZONE_H = 10
 CAMERA_LERP = 0.12
-DEAD_ZONE_W = int(SCREEN_WIDTH * 0.35)
-DEAD_ZONE_H = int(SCREEN_HEIGHT * 0.45)
+DEAD_ZONE_W = int(SCREEN_WIDTH * 0.15)
+DEAD_ZONE_H = int(SCREEN_HEIGHT * 0.25)
+
+PRICE_PER_CHEST = {"chest_one_tex": 1, "chest_two_tex": 2, "chest_tree_tex": 3}
 SCREEN_TITLE = "Очень крутой рогалик"
 KEYS_PRESSED = []
 
-class MainCharacter(arcade.Sprite):
-    """класс главного игрока"""
-    def __init__(self):
-        super().__init__()
-        self.animation_frame = 0
-        self.animation_time = 0
-
-        self.textures = [arcade.load_texture("alienGreen.png"),  # стоит
-                         arcade.load_texture("alienGreen_walk1.png"),  # бежит влево 1
-                         arcade.load_texture("alienGreen_walk2.png"),  # бежит влево 2
-                         arcade.load_texture("alienGreen_walk1.png").flip_horizontally(),  # бежит вправо 1
-                         arcade.load_texture("alienGreen_walk2.png").flip_horizontally(),  # бежит вправо 2
-                         arcade.load_texture("alienGreen_climb1.png"),  # идёт на верх 1
-                         arcade.load_texture("alienGreen_climb2.png")]  # идёт на верх 2
-        self.set_texture(self.animation_frame)
-        self.center_x = 200
-        self.center_y = 200
-        self.scale = 0.5
-        self.speed_player = 250
-
-    def update(self, delta_time):
-        dx = 0
-        dy = 0
-        if arcade.key.A in KEYS_PRESSED:
-            dx -= self.speed_player * delta_time
-        if arcade.key.D in KEYS_PRESSED:
-            dx += self.speed_player * delta_time
-        if arcade.key.W in KEYS_PRESSED:
-            dy += self.speed_player * delta_time
-        if arcade.key.S in KEYS_PRESSED:
-            dy -= self.speed_player * delta_time
-
-        if dx != 0 and dy != 0:
-            factor = 0.7071  # ≈ 1/√2
-            dx *= factor
-            dy *= factor
-
-        self.center_x += dx
-        self.center_y += dy
-
-        if arcade.key.W in KEYS_PRESSED and self.animation_frame != 6:
-            self.animation_frame = 5
-        if arcade.key.S in KEYS_PRESSED:
-          self.animation_frame = 0
-        if arcade.key.A in KEYS_PRESSED and self.animation_frame != 4:
-          self.animation_frame = 3
-        if arcade.key.D in KEYS_PRESSED and self.animation_frame != 2:
-            self.animation_frame = 1
-        elif all([True if key not in KEYS_PRESSED else False for key in [arcade.key.A, arcade.key.D, arcade.key.W, arcade.key.S]]):
-            self.animation_frame = 0
-
-        self.animation_time += ANIMATION_SPEED * ANIMATION_SPEED * ANIMATION_SPEED
-        if self.animation_time > ANIMATION_SPEED:
-            self.animation_time = 0
-            if self.animation_frame == 5:
-                self.animation_frame += 1
-            elif self.animation_frame == 6:
-                self.animation_frame -= 1
-
-            if self.animation_frame == 1:
-                self.animation_frame += 1
-            elif self.animation_frame == 2:
-                self.animation_frame -= 1
-
-            if self.animation_frame == 3:
-                self.animation_frame += 1
-            elif self.animation_frame == 4:
-                self.animation_frame -= 1
-        self.set_texture(self.animation_frame)
 
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
-        "Размер карты: 3_200, 1920"
+        "Размер карты: 1620, 980"
         self.name_map = arcade.load_tilemap("arc_map.tmx", scaling=0.5)  # загружаем карту
         self.scene = arcade.Scene.from_tilemap(self.name_map)  # делаем из карты сцены
 
@@ -101,27 +38,40 @@ class GameView(arcade.View):
 
         "Коллизии"
         self.w_c = self.scene["wall_coll"]
+        self.ch_o_c = self.scene["chest_one_coll"]
+        self.ch_tw_c = self.scene["chest_two_coll"]
+        self.ch_tr_c = self.scene["chest_tree_coll"]
 
     def setup(self):
-        self.player = MainCharacter()
+        """обнуляем всё для нового забега"""
+        "персонаж"
+        self.player = MainCharacter(KEYS_PRESSED)
         self.pl_sp = arcade.SpriteList()
         self.pl_sp.append(self.player)
-
+        "пули"
+        self.bullet_list = arcade.SpriteList()
         "камера для игрока"
         self.world_camera = arcade.Camera2D()
         self.world_camera.position = (200, 200)
+        "камера для gui"
+        self.gui_camera = arcade.Camera2D()
 
-        # ! надо поменять: начало
-        self.physics_engine = arcade.PhysicsEngineSimple(
-            self.player, self.scene["wall_coll"]
+        "физика"
+        self.ph_wall = arcade.PhysicsEngineSimple(
+            self.player, self.w_c
         )
-        # ! надо поменять: конец
-        "!нарежь сцены правильно"
+
+        "иные переменные"
+        self.result_score = 0
+        self.life_time = 0.0
+        self.result_kill = 0
+        self.batch = Batch()
 
     def on_draw(self):
         """Рисует картинку"""
         self.clear()
         self.world_camera.use()
+
         self.f_t.draw()
         self.g_t.draw()
         self.w_t.draw()
@@ -131,12 +81,32 @@ class GameView(arcade.View):
         self.ch_tr_t.draw()
         self.pl_sp.draw()
 
+        self.bullet_list.draw()
+
+        self.gui_camera.use()
+        text_lifetime = arcade.Text(f"Время жизни: {self.life_time:.2f}", 5, SCREEN_HEIGHT - 30, arcade.color.BLACK, 20, batch=self.batch)
+        text_score = arcade.Text(f"Собрано монет: {self.result_score}", 5, SCREEN_HEIGHT - 60, arcade.color.BLACK, 20, batch=self.batch)
+        text_kill = arcade.Text(f"Убито врагов: {self.result_kill}", 5, SCREEN_HEIGHT - 90, arcade.color.BLACK, 20, 20, batch=self.batch)
+        self.batch.draw()
+
     def on_update(self, delta_time):
         """Обновляем все элементы"""
+        print(self.player.center_x, self.player.center_y)
+        "время"
+        self.life_time += delta_time
         "Физический движок"
-        self.physics_engine.update()
-        "Обновляем позицию игрока"
+        #  self.ph_wall.update()
+        "Позиция игрока"
         self.player.update(delta_time)
+        "Позиция пули"
+        self.bullet_list.update()
+
+        "проверка на столкновения игрока с бочками"
+        for name in PRICE_PER_CHEST:
+            for chest in self.scene[name]:
+                if arcade.check_for_collision_with_list(chest, self.pl_sp):
+                    chest.remove_from_sprite_lists()
+                    self.result_score += PRICE_PER_CHEST[name]
 
         "Камера"
         cam_x, cam_y = self.world_camera.position
@@ -175,6 +145,18 @@ class GameView(arcade.View):
     def on_key_release(self, key, modifiers):
         """Управление (удаление клавиш из списка если их отпустили)"""
         KEYS_PRESSED.remove(key)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        "Создаём пулю при нажатии на левую кнопку мыши"
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            world_x, world_y = (self.world_camera.position[0] + (x - SCREEN_WIDTH // 2),
+                                self.world_camera.position[1] + (y - SCREEN_HEIGHT // 2))  # преобразовываем координаты для пули
+            bullet = Bullet(
+                self.player.center_x,
+                self.player.center_y,
+                world_x,
+                world_y)
+            self.bullet_list.append(bullet)
 
 
 def main():
