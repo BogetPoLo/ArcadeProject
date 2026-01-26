@@ -3,15 +3,15 @@
 import arcade
 from arcade.gui import UIManager, UIAnchorLayout, UIBoxLayout, UILabel, UITextArea, UITextureButton, UIInputText
 
-SCREEN_WIDTH = 1200
-SCREEN_HEIGHT = 800
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 640
 SCREEN_TITLE = "Очень крутой рогалик"
 
 
 class Menu_View(arcade.View):
     def __init__(self):
         super().__init__()
-        self.background_color = arcade.color.BLUE_GRAY
+        self.background_color = arcade.color.WHITE
 
         self.manager = UIManager()
         self.manager.enable()
@@ -33,20 +33,22 @@ class Menu_View(arcade.View):
         "!Название игры"
         label = UILabel(text="ОЧЕНЬ КРУТОЙ РОГАЛИК",
                         font_size=50,
-                        text_color=arcade.color.WHITE,
+                        text_color=arcade.color.BLACK,
                         width=300,
                         align="center")
         self.box_layout.add(label)
 
         "!Управление"
-        text_area = UITextArea(text="Управление\nПеремещение: WASD\nУклонение: Q\nПерезарядка: R",
+        text_area = UITextArea(text="Управление: WASD\nУклонение: Q\nПерезарядка: R",
+                               text_color=arcade.color.BLACK,
                                width=200,
                                height=200,
                                font_size=20)
         self.rules_and_management.add(text_area)
 
         "!Правила"
-        text_area_two = UITextArea(text="Правила игры\nНужно пройти 5 уровней,\n убивая противников и собирая монеты,\n которые будут в сундуках.",
+        text_area_two = UITextArea(text="Правила игры:\nНужно пройти 5 уровней,\n убивая противников и собирать бочки",
+                               text_color=arcade.color.BLACK,
                                width=500,
                                height=200,
                                font_size=20)
@@ -63,7 +65,7 @@ class Menu_View(arcade.View):
         self.box_layout.add(texture_button)
 
         "!Поле для ввода ника, если ника нет, то в игру не запускает"
-        input_text = UIInputText(x=0, y=0, width=200, height=30, text="Введи имя")
+        input_text = UIInputText(x=0, y=0, text_color=arcade.color.BLACK, width=200, height=30, text="Введи имя")
         self.box_layout.add(input_text)
 
     def on_draw(self):

@@ -3,8 +3,8 @@ ANIMATION_SPEED = 0.2
 
 class MainCharacter(arcade.Sprite):
     """класс главного игрока"""
-    def init(self, keys_pr):
-        super().init()
+    def __init__(self, keys_pr):
+        super().__init__()
         self.keys_pr = keys_pr
 
         self.animation_frame = 0

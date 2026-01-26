@@ -1,11 +1,12 @@
 # ! - означает, что эта часть кода не доделана
 import math
+from random import randint, choice
 
 import arcade
 from pyglet.graphics import Batch
 from main_character import MainCharacter
+from enemys import Enemy
 from bullet import Bullet
-
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 640
@@ -48,11 +49,30 @@ class GameView(arcade.View):
         self.player = MainCharacter(KEYS_PRESSED)
         self.pl_sp = arcade.SpriteList()
         self.pl_sp.append(self.player)
+
         "пули"
         self.bullet_list = arcade.SpriteList()
+
+        "враги"
+        self.enemy_sp = arcade.SpriteList()
+        for data in [[randint(400, 590), randint(180, 260)],
+                     [randint(180, 270), randint(460, 595)],
+                     [randint(400, 470), randint(460, 660)],
+                     [randint(180, 460), randint(765, 820)],
+                     [randint(750, 920), randint(565, 730)],
+                     [randint(1030, 1270), randint(715, 735)],
+                     [randint(1340, 1460), randint(560, 705)]]:
+            for _ in range(randint(5, 7)):
+                rx = data[0]
+                ry = data[1]
+                angle = choice((0, 30, 45, 60, 90))
+                rspeed = randint(150, 250)
+                self.enemy_sp.append(Enemy(rx, ry, angle, rspeed))
+
         "камера для игрока"
         self.world_camera = arcade.Camera2D()
         self.world_camera.position = (200, 200)
+
         "камера для gui"
         self.gui_camera = arcade.Camera2D()
 
@@ -66,6 +86,7 @@ class GameView(arcade.View):
         self.life_time = 0.0
         self.result_kill = 0
         self.batch = Batch()
+        self.magazine = 10
 
     def on_draw(self):
         """Рисует картинку"""
@@ -80,22 +101,24 @@ class GameView(arcade.View):
         self.ch_tw_t.draw()
         self.ch_tr_t.draw()
         self.pl_sp.draw()
+        self.enemy_sp.draw()
 
         self.bullet_list.draw()
 
         self.gui_camera.use()
         text_lifetime = arcade.Text(f"Время жизни: {self.life_time:.2f}", 5, SCREEN_HEIGHT - 30, arcade.color.BLACK, 20, batch=self.batch)
         text_score = arcade.Text(f"Собрано монет: {self.result_score}", 5, SCREEN_HEIGHT - 60, arcade.color.BLACK, 20, batch=self.batch)
-        text_kill = arcade.Text(f"Убито врагов: {self.result_kill}", 5, SCREEN_HEIGHT - 90, arcade.color.BLACK, 20, 20, batch=self.batch)
+        text_kill = arcade.Text(f"Убито врагов: {self.result_kill}", 5, SCREEN_HEIGHT - 90, arcade.color.BLACK, 20, batch=self.batch)
+        text_magazine = arcade.Text(f"Патронов в магазине: {self.magazine}", 5, SCREEN_HEIGHT - 120, arcade.color.BLACK, 20, batch=self.batch)
         self.batch.draw()
 
     def on_update(self, delta_time):
-        """Обновляем все элементы"""
         print(self.player.center_x, self.player.center_y)
+        """Обновляем все элементы"""
         "время"
         self.life_time += delta_time
         "Физический движок"
-        #  self.ph_wall.update()
+        self.ph_wall.update()
         "Позиция игрока"
         self.player.update(delta_time)
         "Позиция пули"
@@ -107,6 +130,21 @@ class GameView(arcade.View):
                 if arcade.check_for_collision_with_list(chest, self.pl_sp):
                     chest.remove_from_sprite_lists()
                     self.result_score += PRICE_PER_CHEST[name]
+
+        "проверка столкновения врага и стены"
+        for enemy in self.enemy_sp:
+            if arcade.check_for_collision_with_list(enemy, self.w_c):
+                enemy.changing_the_direction()
+            if arcade.check_for_collision_with_list(enemy, self.bullet_list):
+                enemy.remove_from_sprite_lists()
+
+        "позиция врага"
+        self.enemy_sp.update(delta_time)
+
+        "удаляем пулю если она столкнулась со стеной"
+        for bullet in self.bullet_list:
+            if arcade.check_for_collision_with_list(bullet, self.w_c):
+                bullet.remove_from_sprite_lists()
 
         "Камера"
         cam_x, cam_y = self.world_camera.position
@@ -138,6 +176,10 @@ class GameView(arcade.View):
 
         self.world_camera.position = (self.cam_target[0], self.cam_target[1])
 
+        "обновление переменных"
+        if  arcade.key.R in KEYS_PRESSED:
+            self.magazine = 10
+
     def on_key_press(self, key, modifiers):
         """Управление (добавляем нажатые клавиши в список)"""
         KEYS_PRESSED.append(key)
@@ -148,7 +190,8 @@ class GameView(arcade.View):
 
     def on_mouse_press(self, x, y, button, modifiers):
         "Создаём пулю при нажатии на левую кнопку мыши"
-        if button == arcade.MOUSE_BUTTON_LEFT:
+        if button == arcade.MOUSE_BUTTON_LEFT and self.magazine > 0:
+            self.magazine -= 1
             world_x, world_y = (self.world_camera.position[0] + (x - SCREEN_WIDTH // 2),
                                 self.world_camera.position[1] + (y - SCREEN_HEIGHT // 2))  # преобразовываем координаты для пули
             bullet = Bullet(

@@ -3,8 +3,8 @@ import math
 
 
 class Bullet(arcade.Sprite):
-    def init(self, start_x, start_y, target_x, target_y, speed=800, damage=10):
-        super().init()
+    def __init__(self, start_x, start_y, target_x, target_y, speed=800, damage=10):
+        super().__init__()
         self.texture = arcade.load_texture("worm_hit.png")
         self.center_x = start_x
         self.center_y = start_y
