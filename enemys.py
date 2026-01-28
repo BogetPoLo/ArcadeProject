@@ -37,9 +37,7 @@ class Enemy(arcade.Sprite):
     def update(self, delta_time):
         dx = self.speed_enemy * delta_time * math.cos(math.radians(self.angle_en))
         dy = self.speed_enemy * delta_time * math.sin(math.radians(self.angle_en))
-        if self.turn:
-            dx = dx * -1
-            dy = dy * -1
+
         self.center_x += dx
         self.center_y += dy
 
@@ -60,3 +58,4 @@ class Enemy(arcade.Sprite):
 
     def changing_the_direction(self):
         self.turn = not(self.turn)
+        self.angle_en = (self.angle_en + 180) % 360

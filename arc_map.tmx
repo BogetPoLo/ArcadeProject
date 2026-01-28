@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="1">
  <tileset firstgid="1" source="texture_arc.tsx"/>
  <layer id="1" name="floor_tex" width="50" height="30">
   <data encoding="base64" compression="zlib">
@@ -21,24 +21,69 @@
    eJzt1bsNwCAMRdE3SFaJ2IEJMlpGyWiB1lWk2BhZ95QUYPwBCQBq6NkBFLBTDneKBVjhT897zMvXPZhNAKgj400/pCfhWHczd+MuV3YcVlRN+f/jNOm2a+eiOaGuQIwXIgEHDQ==
   </data>
  </layer>
+ <layer id="14" name="protection_from_enemies" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlsENACEMwzos+8/ABkdLL1WEbKlPkvqBYEXEEs0Xqs6XPG7BA48Jj0nw8AIPL/DwAo9z1iR45LKymZ09pv5XePR7s/vcnvtjl25nlsk7j0ctWw0etWw1eNSy1Vkvezi+SS4eTG02cprPCQ==
+  </data>
+ </layer>
+ <layer id="15" name="level_one" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz0kNAAAIwDC84t8DFnhytMkELAIAAADYJBtt4GMWH7Nc+YBvCpWLFOM=
+  </data>
+ </layer>
+ <layer id="16" name="level_two" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz1EJACAUwMDXzv6NxAh+CEPuYAE2A++ty6p8tPho8dHio8VHi4+WXz4AAODYko0umQ==
+  </data>
+ </layer>
+ <layer id="17" name="level_tree" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzzENAAAIBLG3hX9j7AhggDY5AZcA/FYL+fDhw4ePex8AAABTA8mvLIk=
+  </data>
+ </layer>
+ <layer id="18" name="level_four" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJACAMBMH0Y//9+c9PRGLCDNz/NgIAALi10rqa0JEburbo+Mv0jtNV06Hjha6/Mx1QawOFZRiH
+  </data>
+ </layer>
+ <layer id="19" name="finish" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7EJAAAIBDE3cP9tbW2/U0jgBrgqAAAAgEyvPvNxi49bfEBuAPTnATw=
+  </data>
+ </layer>
+ <layer id="20" name="start" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENADAMwzB/0P+/7Zgpu1uQgA5QAgAAALQ5S6/x0cVHl18+gHEBPVwCHQ==
+  </data>
+ </layer>
+ <layer id="21" name="corridor" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJADAIBEHbtf8GUkF+EswxAxawcFgFAO/15X6jY5eUDiBLyi/SQaKJLWzYU0oHQIIDJXkN8w==
+  </data>
+ </layer>
+ <layer id="22" name="level_one_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0sEJACAMA8Bs49qO4mjqDkKh3kH+CSQBAACAP4xk3VT3oI/zp1nd4YUuOwCqbR28A10=
+  </data>
+ </layer>
+ <layer id="23" name="level_two_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz8ENACAMA7Fs07XYfwo+jABFqmzp/kkCAP0qWb833DDlBwDv1AkAgPk2lDABXQ==
+  </data>
+ </layer>
+ <layer id="24" name="level_tree_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENACAMA0Fvk7UZlYaOFikC7qTv7QQAYFfJ6N5wwis/uEOtAACAP03vYgHd
+  </data>
+ </layer>
+ <layer id="25" name="level_four_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJADAIA0C36VruP0X7cARBKneQf/JJBAAA0OFUAPjD++yc7tBhyw6ADS4O0gFd
+  </data>
+ </layer>
  <layer id="10" name="wall_coll" width="50" height="30">
   <data encoding="base64" compression="zlib">
    eJztlssNhDAMRN0UbVADpW0plAZIywVt/BmPISyMlAuRYz/HDIjUaVTWndSqt5pD6x/S2ys5mDEvR04sjl8zN4jM+0Ln1zvTTI4zFOXQenClryIcEa2z8wmGQPLUm+lvhAP1dFH2kXlYa56AsFROK/bJHNXvOfv7FIn5Jw7rfqz3e2isY3yUoyWPp3zrmvZnm59l60B6jp6H5mNweLyc4fHaXubfytKRA4mL7GWE3of1/4XmQ++E0bsIR1Tes3vnsHIxc6IcTK88kwPxn7vOFeohPXIgZzN8sAeOCrF7wvimv6rXAm1uYQY=
-  </data>
- </layer>
- <layer id="12" name="chest_two_coll" width="50" height="30">
-  <data encoding="base64" compression="zlib">
-   eJzt1LEKACAIBcB+2v9vaQoaWsTsDgRHH6hjcCtWva5DBqgqtgLyuDl+0WXXK+WIra80G3+yh0CWLr/mlMM/JdMESGIIsA==
-  </data>
- </layer>
- <layer id="13" name="chest_tree_coll" width="50" height="30">
-  <data encoding="base64" compression="zlib">
-   eJzt10EKACAIRFHv3P0h3EmrNmM2/AeuYwzSInBjlfpdzdGVR3mOw50klxwAMAFvKuCpY6c8d36XPwAAQOPljHCfT4p87j3DDBvyjgj9
-  </data>
- </layer>
- <layer id="11" name="chest_one_coll" width="50" height="30">
-  <data encoding="base64" compression="zlib">
-   eJzt1kEKACAIRFFv7fVbBq0yMqf6b9MqaFA0M0CLH7qT7eccQBR9poNaaFvdLWp1jbzJTTMDOh9OADV2zcqMufvKfHglB+5X8Tei/4F5DS5DDI4=
   </data>
  </layer>
  <layer id="5" name="chest_tree_tex" width="50" height="30">
