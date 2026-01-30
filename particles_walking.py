@@ -4,6 +4,7 @@ import random
 
 class DustParticleFromWalking(arcade.SpriteCircle):
     """Частица пыли для эффекта приземления"""
+
     def __init__(self, x, y):
         color = random.choice([
             (220, 220, 220, 255),  # Очень легкий налет пыли

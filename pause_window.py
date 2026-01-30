@@ -9,8 +9,9 @@ SCREEN_TITLE = "Pause Menu — тест"
 
 
 class PauseView(arcade.View):
-    def __init__(self):
+    def __init__(self, game_view):
         super().__init__()
+        self.game_view = game_view
 
         self.background_color = arcade.color.DARK_SLATE_GRAY
 
@@ -72,7 +73,7 @@ class PauseView(arcade.View):
     def on_key_press(self, key, modifiers):
         # Продолжить игру
         if key == arcade.key.ESCAPE:
-            print("Продолжить игру (заглушка)")
+            self.window.show_view(self.game_view)
 
         # Рестарт
         elif key == arcade.key.R:
@@ -81,14 +82,3 @@ class PauseView(arcade.View):
         # Выход
         elif key == arcade.key.Q:
             arcade.close_window()
-
-
-def main():
-    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    pause_view = PauseView()
-    window.show_view(pause_view)
-    arcade.run()
-
-
-if __name__ == "__main__":
-    main()

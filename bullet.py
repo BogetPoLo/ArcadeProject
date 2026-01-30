@@ -19,6 +19,7 @@ class Bullet(arcade.Sprite):
         self.change_y = math.sin(angle) * speed
 
         self.angle = math.degrees(-angle)
+
     def update(self, delta_time):
         # Удаляем пулю, если она ушла за экран
         if (self.center_x < 0 or self.center_x > 1620 or

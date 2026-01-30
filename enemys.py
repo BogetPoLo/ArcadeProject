@@ -17,15 +17,15 @@ class Enemy(arcade.Sprite):
 
         self.ran_textures = random.randint(1, 2)
         if self.ran_textures == 1:
-            self.textures = [arcade.load_texture("bat.png"),  # вправо, крылья вверх
-                             arcade.load_texture("bat_hang.png"),  # вправо, крылья вверх
-                             arcade.load_texture("bat.png").flip_horizontally(),  # влево, крылья вверх
-                             arcade.load_texture("bat_hang.png").flip_horizontally()]  # влево, крылья вверх
+            self.textures = [arcade.load_texture("enemy_textures/bat.png"),  # вправо, крылья вверх
+                             arcade.load_texture("enemy_textures/bat_hang.png"),  # вправо, крылья вверх
+                             arcade.load_texture("enemy_textures/bat.png").flip_horizontally(),  # влево, крылья вверх
+                             arcade.load_texture("enemy_textures/bat_hang.png").flip_horizontally()]  # влево, крылья вверх
         else:
-            self.textures = [arcade.load_texture("ghost.png"),  # вправо, открытый рот
-                             arcade.load_texture("ghost_normal.png"),  # вправо, открытый рот
-                             arcade.load_texture("ghost.png").flip_horizontally(),  # влево, закрытый рот
-                             arcade.load_texture("ghost_normal.png").flip_horizontally()]  # влево, закрытый рот
+            self.textures = [arcade.load_texture("enemy_textures/ghost.png"),  # вправо, открытый рот
+                             arcade.load_texture("enemy_textures/ghost_normal.png"),  # вправо, открытый рот
+                             arcade.load_texture("enemy_textures/ghost.png").flip_horizontally(),  # влево, закрытый рот
+                             arcade.load_texture("enemy_textures/ghost_normal.png").flip_horizontally()]  # влево, закрытый рот
 
         self.set_texture(self.animation_frame)
         self.center_x = x

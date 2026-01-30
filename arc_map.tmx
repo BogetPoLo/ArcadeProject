@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="38" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="39" nextobjectid="1">
  <tileset firstgid="1" source="texture_arc.tsx"/>
  <layer id="1" name="floor_tex" width="50" height="30">
   <data encoding="base64" compression="zlib">
@@ -64,6 +64,11 @@
  <layer id="10" name="wall_coll" width="50" height="30">
   <data encoding="base64" compression="zlib">
    eJztltENgzAMRP3dfbJGZ2A0RulozUeRUNTE9vkMoeWkSIjIsZ8xByJ5eg7WldSrN5tj1D+kt2dyMGNujphYHN9mroi8toXOr3WmmRxHyMsx6sGZvopweFRnZ3WGQLLUG+mvhwP1dBnsI/NQa16AsFBOLfafObLfc/b3yRPzSxzteuz26/Wqvd+ls9ocXo6eLJ7yqWvZ7pUdB1oH0nP0PDQfg8Pi5QyPH+1F/q00tRxInGcvIvR5aP9faD70mTB65+Hwynr27BxaLmZOlIPplUdyIP5z1blCPWRGDuRshg/OwJEhdk8Y3/Rb+XoD5O5hug==
+  </data>
+ </layer>
+ <layer id="38" name="stop_game_win" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw6ENAAAIA7B9zfuIGSy+TZoAAAAA/MwJANQCAhIBZg==
   </data>
  </layer>
  <layer id="15" name="level_one" width="50" height="30">
