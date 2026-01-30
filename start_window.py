@@ -1,72 +1,100 @@
-# ! - означает, что эта часть кода не доделана
-
 import arcade
-from arcade.gui import UIManager, UIAnchorLayout, UIBoxLayout, UILabel, UITextArea, UITextureButton, UIInputText
+from arcade.gui import (
+    UIManager, UIAnchorLayout, UIBoxLayout,
+    UILabel, UITextArea, UITextureButton, UIInputText
+)
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 640
-SCREEN_TITLE = "Очень крутой рогалик"
+SCREEN_WIDTH = 900
+SCREEN_HEIGHT = 650
+SCREEN_TITLE = "ОЧЕНЬ КРУТОЙ РОГАЛИК"
 
 
-class Menu_View(arcade.View):
+class MenuView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.background_color = arcade.color.WHITE
+        self.background_color = arcade.color.ALMOND
 
         self.manager = UIManager()
         self.manager.enable()
 
-        # Layout
-        self.anchor_layout = UIAnchorLayout()  # Центрирует виджеты
-        self.box_layout = UIBoxLayout(vertical=True, space_between=10)  # !Вертикальный стек
-        self.rules_and_management = UIBoxLayout(vertical=False, space_between=10)  # !Горизонтальный layout для правил и управления
+        self.anchor = UIAnchorLayout()
+        self.main_box = UIBoxLayout(vertical=True, space_between=20)
 
-        self.setup_widgets()
+        self.info_box = UIBoxLayout(vertical=False, space_between=30)
 
-        self.box_layout.add(self.rules_and_management)
+        self.setup_ui()
 
-        self.anchor_layout.add(self.box_layout)
-        self.manager.add(self.anchor_layout)
+        self.main_box.add(self.info_box)
+        self.anchor.add(self.main_box, anchor_x="center_x", anchor_y="center_y")
+        self.manager.add(self.anchor)
 
-    def setup_widgets(self):
-        "Создаём виджеты"
-        "!Название игры"
-        label = UILabel(text="ОЧЕНЬ КРУТОЙ РОГАЛИК",
-                        font_size=50,
-                        text_color=arcade.color.BLACK,
-                        width=300,
-                        align="center")
-        self.box_layout.add(label)
+    def setup_ui(self):
+        # Заголовок
+        title = UILabel(
+            text="🔥 ОЧЕНЬ КРУТОЙ РОГАЛИК 🔥",
+            font_size=48,
+            bold=True,
+            text_color=arcade.color.BLACK,
+            align="center"
+        )
+        self.main_box.add(title)
 
-        "!Управление"
-        text_area = UITextArea(text="Управление: WASD\nУклонение: Q\nПерезарядка: R",
-                               text_color=arcade.color.BLACK,
-                               width=200,
-                               height=200,
-                               font_size=20)
-        self.rules_and_management.add(text_area)
+        # Управление
+        controls_text = (
+            "🎮 УПРАВЛЕНИЕ\n\n"
+            "W A S D — ходьба\n"
+            "ПКМ — выстрел\n"
+            "R — перезарядка\n"
+            "Q — открыть дверь\n"
+        )
 
-        "!Правила"
-        text_area_two = UITextArea(text="Правила игры:\nНужно пройти 5 уровней,\n убивая противников и собирать бочки",
-                               text_color=arcade.color.BLACK,
-                               width=500,
-                               height=200,
-                               font_size=20)
-        self.rules_and_management.add(text_area_two)
+        controls = UITextArea(
+            text=controls_text,
+            width=300,
+            height=220,
+            font_size=18,
+            text_color=arcade.color.BLACK
+        )
 
-        "!Кнопка для запуска игры"
-        texture_normal = arcade.load_texture(":resources:/gui_basic_assets/button/red_normal.png")  # Нужно добавить свои текстуры
-        texture_hovered = arcade.load_texture(":resources:/gui_basic_assets/button/red_hover.png")  # Нужно добавить свои текстуры
-        texture_pressed = arcade.load_texture(":resources:/gui_basic_assets/button/red_press.png")  # Нужно добавить свои текстуры
-        texture_button = UITextureButton(texture=texture_normal,
-                                         texture_hovered=texture_hovered,
-                                         texture_pressed=texture_pressed,
-                                         scale=1.0)
-        self.box_layout.add(texture_button)
+        # ===== Правила =====
+        rules_text = (
+            "📜 ПРАВИЛА ИГРЫ\n\n"
+            "• Пройди 5 уровней\n"
+            "• Уничтожай врагов\n"
+            "• Исследуй комнаты\n\n"
+            "🔑 КЛЮЧИ:\n"
+            "Фиолетовый\n"
+            "Красный "
+        )
 
-        "!Поле для ввода ника, если ника нет, то в игру не запускает"
-        input_text = UIInputText(x=0, y=0, text_color=arcade.color.BLACK, width=200, height=30, text="Введи имя")
-        self.box_layout.add(input_text)
+        rules = UITextArea(
+            text=rules_text,
+            width=380,
+            height=250,
+            font_size=18,
+            text_color=arcade.color.BLACK
+        )
+
+        self.info_box.add(controls)
+        self.info_box.add(rules)
+
+        # Ввод ника
+        self.name_input = UIInputText(
+            text="Введите имя",
+            width=250,
+            height=35,
+            text_color=arcade.color.BLACK
+        )
+        self.main_box.add(self.name_input)
+
+        start_button = UITextureButton(
+            texture=arcade.load_texture(":resources:/gui_basic_assets/button/red_normal.png"),
+            texture_hovered=arcade.load_texture(":resources:/gui_basic_assets/button/red_hover.png"),
+            texture_pressed=arcade.load_texture(":resources:/gui_basic_assets/button/red_press.png"),
+            scale=1.1
+        )
+
+        self.main_box.add(start_button)
 
     def on_draw(self):
         self.clear()
@@ -75,8 +103,7 @@ class Menu_View(arcade.View):
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    start_view = Menu_View()
-    window.show_view(start_view)
+    window.show_view(MenuView())
     arcade.run()
 
 
