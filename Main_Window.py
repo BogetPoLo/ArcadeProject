@@ -9,22 +9,25 @@ from enemys import Enemy
 from bullet import Bullet
 from particles_walking import DustParticleFromWalking
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 640
+SCREEN_WIDTH = 800  # Ширина
+SCREEN_HEIGHT = 640  # Высота
 
-ANIMATION_SPEED = 0.2
 CAMERA_LERP = 0.12
-DEAD_ZONE_W = int(SCREEN_WIDTH * 0.15)
-DEAD_ZONE_H = int(SCREEN_HEIGHT * 0.25)
-DAMAGE_TIMER_CONST = 1.5
-DUST_FROM_WALKING_TIMER = 0.5
+DEAD_ZONE_W = int(SCREEN_WIDTH * 0.15)  # Мёртвая зона по ширине
+DEAD_ZONE_H = int(SCREEN_HEIGHT * 0.25)  # Мёртвая зона по высоте
+DAMAGE_TIMER_CONST = 1.5  # Промежуток между уроном, который может пройти по игроку
+DUST_FROM_WALKING_TIMER = 0.5  # Промежуток появления частиц от ходьбы
 
-PRICE_PER_CHEST = {"chest_one_tex": 1, "chest_two_tex": 2, "chest_tree_tex": 3}
-SCREEN_TITLE = "Очень крутой рогалик"
-KEYS_PRESSED = []
+PRICE_PER_CHEST = {"chest_one_tex": 1, "chest_two_tex": 2, "chest_tree_tex": 3}  # Цена за каждую бочку
+SCREEN_TITLE = "Очень крутой рогалик"  # Название игры
+KEYS_PRESSED = []  # Список нажатых кнопок
 
 
 class GameView(arcade.View):
+    """
+    Класс реализует саму игру
+    Создание персонажей, обновление всего и т.п.
+    """
     def __init__(self):
         super().__init__()
         "Размер карты: 1620, 980"
@@ -43,6 +46,16 @@ class GameView(arcade.View):
         "Коллизии"
         self.w_c = self.scene["wall_coll"]
         self.p_f_e = self.scene["protection_from_enemies"]
+        self.l_f_e = self.scene["limitations for enemies"]
+
+        self.lv_start_on = self.scene["level_start_one"]
+        self.lv_start_tw = self.scene["level_start_two"]
+        self.lv_start_tr = self.scene["level_start_tree"]
+        self.lv_start_fo = self.scene["level_start_four"]
+
+        "Двери для комнат с бочками"
+        self.red_d = self.scene["red_door"]
+        self.purple_d = self.scene["purple door"]
 
         "уровни поделённые на блоки"
         self.start = self.scene["start"]
@@ -52,23 +65,27 @@ class GameView(arcade.View):
         self.le_tw = self.scene["level_two"]
         self.le_tr = self.scene["level_tree"]
         self.le_fo = self.scene["level_four"]
-        self.TYPES_OF_LOCATIONS = {self.start: "Вы на стартовой локации",
-                                   self.le_on: "Вы на первом уровне",
-                                   self.le_tw: "Вы на втором уровне",
-                                   self.le_tr: "Вы на третьем уровне",
-                                   self.le_fo: "Вы на четвёртом уровне",
-                                   self.finish: "Конец забега",
-                                   self.corridor: "Вы в коридоре"}
+        self.TYPES_OF_LOCATIONS = {self.start: ["Вы на стартовой локации"],
+                                   self.le_on: ["Вы на первом уровне"],
+                                   self.le_tw: ["Вы на втором уровне"],
+                                   self.le_tr: ["Вы на третьем уровне"],
+                                   self.le_fo: ["Вы на четвёртом уровне"],
+                                   self.finish: ["Конец забега"],
+                                   self.corridor: ["Вы в коридоре"]}
+        self.DOOR = {self.lv_start_on: self.le_on,
+                     self.lv_start_tw: self.le_tw,
+                     self.lv_start_tr: self.le_tr,
+                     self.lv_start_fo: self.le_fo}
 
         "двери уровней"
         self.lv_on_cl = self.scene["level_one_close"]
         self.lv_tw_cl = self.scene["level_two_close"]
         self.lv_tr_cl = self.scene["level_tree_close"]
         self.lv_fo_cl = self.scene["level_four_close"]
-        self.DOOR_LEVEL = {self.lv_on_cl: False,
-                           self.lv_tw_cl: False,
-                           self.lv_tr_cl: False,
-                           self.lv_fo_cl: False}
+
+        "ключи"
+        self.r_k = self.scene["red_key"]
+        self.p_k = self.scene["purple_key"]
 
     def setup(self):
         """обнуляем всё для нового забега"""
@@ -91,10 +108,18 @@ class GameView(arcade.View):
         self.gui_camera = arcade.Camera2D()
 
         "физика"
-        self.ph_wall = arcade.PhysicsEngineSimple(
+        self.ph_wall = arcade.PhysicsEngineSimple(  # Игрок и стены
             self.player, self.w_c
         )
-        "!доделай движок"
+        "Двери для комнат с бочками"
+        self.ph_r_door = arcade.PhysicsEngineSimple(
+            self.player, self.red_d
+        )
+        self.ph_p_door = arcade.PhysicsEngineSimple(
+            self.player, self.purple_d
+        )
+
+        "Двери для каждого уровня"
         self.ph_lv_one = arcade.PhysicsEngineSimple(
             self.player, self.lv_on_cl
         )
@@ -134,6 +159,22 @@ class GameView(arcade.View):
         self.damage_timer = 0
         self.dust_w = 0
         self.name_level = 0
+        self.close_door = None
+        self.current_level = None
+        self.location = None
+        self.room_text_one = False
+        self.room_text_two = False
+        self.open_room_one = False
+        self.open_room_two = False
+        self.purple_keys = 0
+        self.red_keys = 0
+
+        self.sound_closed_door = arcade.load_sound("closed-door-381852.wav")
+        self.sound_laser = arcade.load_sound("laser-shot-ingame-230500.wav")
+        self.sound_smash = arcade.load_sound("wood-smash-5-170421.wav")
+        self.sound_game = arcade.load_sound("game.mp3")
+
+        arcade.play_sound(self.sound_game, volume=0.2, loop=True)
 
     def on_draw(self):
         """Рисует картинку"""
@@ -144,12 +185,28 @@ class GameView(arcade.View):
         self.g_t.draw()
         self.w_t.draw()
         self.a_t.draw()
+        self.r_k.draw()
+        self.p_k.draw()
         self.ch_o_t.draw()
         self.ch_tw_t.draw()
         self.ch_tr_t.draw()
         self.particles_w.draw()
         self.pl_sp.draw()
         self.enemy_sp.draw()
+
+        if not(self.open_room_one):
+            self.purple_d.draw()
+        if not(self.open_room_two):
+            self.red_d.draw()
+
+        if self.current_level == self.le_on:
+            self.lv_on_cl.draw()
+        elif self.current_level == self.le_tw:
+            self.lv_tw_cl.draw()
+        elif self.current_level == self.le_tr:
+            self.lv_tr_cl.draw()
+        elif self.current_level == self.le_fo:
+            self.lv_fo_cl.draw()
 
         self.bullet_list.draw()
 
@@ -160,17 +217,82 @@ class GameView(arcade.View):
         text_magazine = arcade.Text(f"Патронов в магазине: {self.magazine}", 5, SCREEN_HEIGHT - 120, arcade.color.BLACK, 20, batch=self.batch)
         text_xp = arcade.Text(f"XP: {self.xp}", 5, SCREEN_HEIGHT - 150, arcade.color.BLACK,20, batch=self.batch)
         text_num_level = arcade.Text(str(self.name_level), 5, SCREEN_HEIGHT - 180, arcade.color.BLACK,20, batch=self.batch)
+        p_keys = arcade.Text(f"Фиолетовыx ключей: {self.purple_keys}", 5, SCREEN_HEIGHT - 210, arcade.color.BLACK,20, batch=self.batch)
+        r_keys = arcade.Text(f"Красных ключей: {self.red_keys}", 5, SCREEN_HEIGHT - 240, arcade.color.BLACK, 20, batch=self.batch)
+
+        if self.room_text_one:
+            color = [arcade.color.RED, arcade.color.RED]
+            arcade.draw_rect_filled(arcade.rect.XYWH(SCREEN_WIDTH // 1.35, SCREEN_HEIGHT // 4.6, 400, 100), arcade.color.WHITE)
+            arcade.draw_rect_outline(arcade.rect.XYWH(SCREEN_WIDTH // 1.35, SCREEN_HEIGHT // 4.6, 400, 100), arcade.color.BLACK)
+            text_door_one = arcade.Text("Чтобы открыть эту комнату нужно:", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4, arcade.color.BLACK,20, batch=self.batch)
+            if self.purple_keys == 4:
+                color[0] = arcade.color.GREEN
+            text_door_two = arcade.Text(f"Найдите фиолетовые ключи {self.purple_keys}/4", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4 - 30, color[0], 20, batch=self.batch)
+            if self.xp > 70:
+                color[1] = arcade.color.GREEN
+            text_door_tree = arcade.Text("XP должно быть больше 70.", SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4 - 60, color[1], 20, batch=self.batch)
+
+        if self.room_text_two:
+            color = [arcade.color.RED, arcade.color.RED]
+            arcade.draw_rect_filled(arcade.rect.XYWH(SCREEN_WIDTH // 3.5, SCREEN_HEIGHT // 3.5, 400, 100), arcade.color.WHITE)
+            arcade.draw_rect_outline(arcade.rect.XYWH(SCREEN_WIDTH // 3.5, SCREEN_HEIGHT // 3.5, 400, 100), arcade.color.BLACK)
+            text_door_one = arcade.Text("Чтобы открыть эту комнату нужно:", SCREEN_WIDTH // 24, SCREEN_HEIGHT // 3.2, arcade.color.BLACK, 20, batch=self.batch)
+            if self.red_keys == 2:
+                color[0] = arcade.color.GREEN
+            text_door_two = arcade.Text(f"Найдите красные ключи {self.red_keys}/2", SCREEN_WIDTH // 24, SCREEN_HEIGHT // 3.2 - 30, color[0], 20, batch=self.batch)
+            if self.xp > 40:
+                color[1] = arcade.color.GREEN
+            text_door_tree = arcade.Text("XP должно быть больше 40.", SCREEN_WIDTH // 24, SCREEN_HEIGHT // 3.2 - 60, color[1],20, batch=self.batch)
         self.batch.draw()
 
     def on_update(self, delta_time):
-        print(self.player.center_x, self.player.center_y)
         """Обновляем все элементы"""
         "время"
         self.life_time += delta_time
+
         "Физический движок"
         self.ph_wall.update()
+        if not (self.open_room_one):
+            self.ph_p_door.update()
+        if not (self.open_room_two):
+            self.ph_r_door.update()
+
+        if self.xp > 70 and self.purple_keys == 4 and arcade.key.Q in KEYS_PRESSED and self.room_text_one and not(self.open_room_one):
+            self.open_room_one = True
+            arcade.play_sound(self.sound_closed_door)
+
+        if self.xp > 40 and self.purple_keys == 2 and arcade.key.Q in KEYS_PRESSED and self.room_text_two and not(self.open_room_two):
+            self.open_room_two = True
+            arcade.play_sound(self.sound_closed_door)
+
+        "Проверяем есть ли на одном уровне с игроком враги. Если да, то локация закрывается и надо убить всех врагов."
+        if self.close_door is None:
+            for door, location in self.DOOR.items():
+                if arcade.check_for_collision_with_list(self.player, door):
+                    self.close_door = door
+                    self.location = location
+
+        if self.location is not None:
+            if any([True if arcade.check_for_collision_with_list(enemy, self.location) else False for enemy in self.enemy_sp]):
+                self.current_level = self.location
+            else:
+                self.close_door = None
+                self.current_level = None
+                self.location = None
+
+        if self.location is not None:
+            if self.current_level == self.le_on:
+                self.ph_lv_one.update()
+            elif self.current_level == self.le_tw:
+                self.ph_lv_two.update()
+            elif self.current_level == self.le_tr:
+                self.ph_lv_tree.update()
+            elif self.current_level == self.le_fo:
+                self.ph_lv_four.update()
+
         "Позиция игрока"
         self.player.update(delta_time)
+
         "Позиция пули"
         self.bullet_list.update()
 
@@ -180,13 +302,15 @@ class GameView(arcade.View):
                 if arcade.check_for_collision_with_list(chest, self.pl_sp):
                     chest.remove_from_sprite_lists()
                     self.result_score += PRICE_PER_CHEST[name]
+                    arcade.play_sound(self.sound_smash, volume=0.1)
 
         "проверка столкновения врага и стены"
         for enemy in self.enemy_sp:
-            if arcade.check_for_collision_with_list(enemy, self.w_c):
+            if arcade.check_for_collision_with_list(enemy, self.l_f_e):
                 enemy.changing_the_direction()
             if arcade.check_for_collision_with_list(enemy, self.bullet_list):
                 enemy.remove_from_sprite_lists()
+                self.result_kill += 1
             if arcade.check_for_collision_with_list(enemy, self.p_f_e):
                 enemy.remove_from_sprite_lists()
             if arcade.check_for_collision_with_list(enemy, self.pl_sp) and self.damage_timer > DAMAGE_TIMER_CONST:
@@ -233,10 +357,29 @@ class GameView(arcade.View):
         "проверяем на каком уровне игрок и обновляем"
         for location, text_loc in self.TYPES_OF_LOCATIONS.items():
             if arcade.check_for_collision_with_list(self.player, location):
-                self.name_level = text_loc
-        # "Проверяем есть ли враги на локации"
-        # for enemy in self.enemy_sp:
-        #     if arcade.check_for_collision_with_list(enemy, location):
+                self.name_level = text_loc[0]
+
+        "Проверяем на срабатывания текста около комнат с бочками"
+        if 771 <= self.player.center_x <= 831 and 740 <= self.player.center_y <= 773:
+            self.room_text_one = True
+        else:
+            self.room_text_one = False
+
+        if 1400 <= self.player.center_x <= 1475 and 534 <= self.player.center_y <= 551:
+            self.room_text_two = True
+        else:
+            self.room_text_two = False
+
+        "проверка на нахождения ключа"
+        for key in self.r_k:
+            if arcade.check_for_collision(self.player, key):
+                self.red_keys += 1
+                key.remove_from_sprite_lists()
+
+        for key in self.p_k:
+            if arcade.check_for_collision(self.player, key):
+                self.purple_keys += 1
+                key.remove_from_sprite_lists()
 
 
     def update_camera(self):
@@ -296,6 +439,7 @@ class GameView(arcade.View):
                 world_x,
                 world_y)
             self.bullet_list.append(bullet)
+            arcade.play_sound(self.sound_laser, volume=0.1)
 
 
 def main():
