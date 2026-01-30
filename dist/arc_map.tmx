@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="50" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="39" nextobjectid="1">
+ <tileset firstgid="1" source="texture_arc.tsx"/>
+ <layer id="1" name="floor_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1TsSgCAMhOFwSHvvfwp7xyEIBjbyF1uy8DE8ipkV4uYwO+9ZvaZMjqd5a8GBY6bjbU9PcGgFh1ZwtHfh0HJ4vaP/2Kx/8I+OiHPRun+17t5xX64FRy5HxFs42hlxv3DgyO7wunZwKL2Bag6yXy7GK/v0
+  </data>
+ </layer>
+ <layer id="3" name="grass_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztmI0RgyAMhRmlO3QB3eRN4AwdxVEYxVEKNbQxF/lRrNr63XkIxpcnQdvDmHwg+h21rRKrjWl0Y2yj6Wt572N871rbibhYX9OWYy27B2wsRYh1nuDib+Fw/T74IN9DGHPnVuZP9XNpp57e81Wqw+r7MOLc14xqZ6VXWYel+Plk81WsC9H33vE5b0IOqpXN1VlCy9pcPe15aS15zwOtJ2uYZmrNr4Hq/dLNfb+PCs3hoveiJtgz+Qqwt4FKyO/92an17b1Yz1WLKdjbAAFTpza/Vl+ItvS+XI42b0fzI8n1h4o5Na2Ujxr/PTUNmZdra9e2qufR10kp2NvACdlqDWAj3X8AG+l+433HSbXPTKyusWuY6Wv3yNiUdimafoyUx5iedo32Ff0eCvg+Z+y3OpVLjsc8lTD37P7g+4pyT0vLz8dy9g5k7if+t0QR
+  </data>
+ </layer>
+ <layer id="9" name="all_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1bsNwCAMRdE3SFaJ2IEJMlpGyWiB1lWk2BhZ95QUYPwBCQBq6NkBFLBTDneKBVjhT897zMvXPZhNAKgj400/pCfhWHczd+MuV3YcVlRN+f/jNOm2a+eiOaGuQIwXIgEHDQ==
+  </data>
+ </layer>
+ <layer id="21" name="corridor" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJADAIBEHbtf8GUkF+EswxAxawcFgFAO/15X6jY5eUDiBLyi/SQaKJLWzYU0oHQIIDJXkN8w==
+  </data>
+ </layer>
+ <layer id="32" name="limitations for enemies" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztltsNwCAMAxmm+8/YBZDqGru1Ip/EDwKS471WSeUiSxpMTvXwofJg96dqTys9vqAeWJ96nMdm49fjnHpgfSZ5THgHd05ovQKXhzIeguPf/oeHgzQPdn2ePJRrj3ow7ZRzXo/3Y9RDl4NiDKXHlHPuuJcd9y4SMwXHP7DkcwMC8R6p
+  </data>
+ </layer>
+ <layer id="19" name="finish" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7EJAAAIBDE3cP9tbW2/U0jgBrgqAAAAgEyvPvNxi49bfEBuAPTnATw=
+  </data>
+ </layer>
+ <layer id="2" name="wall_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztV8sNwyAM5Zzce84oHSEjMEpHySgdpaOUKkpELf8xSqrmSUgNn2ce2NhNqR/mlF5jSk/YSn/uaDYcZc8L0Z972p2Rs5Mad7ZH6aDsCmuyle/SoUOUjs0/h9Kqebsvlv5s9V+LT0fp8PB4QN0rZf8GWg3sbOt76AmPDiM/yhMNjQ7uDhT8iziJsGOxa70PD5cW1jPS2P5nHcO67qsNgfHB6fTooPh6v7tH6ij5aUHuaEf5/YDjYC45XnF87FB7InVQkOKjqt33eeOq85OP7959eOohL5/E2RKnnF3MH7DYrWObulvNnqi9zILfaexq9mN5az06WsH9j6prJq5ehTUop6O17vXElzZfwTPu+QZHvrsIRwbfJGcrIvO5xK3l9NQnZ9BhrW23NZwtySbGQSHSr8o7MHF126/okLiY/EPmQW2D+ekIHT2gyc3MmUwcFxy/cB68AWVQhyA=
+  </data>
+ </layer>
+ <layer id="14" name="protection_from_enemies" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztl1EKwzAIhn3eIUcf+rhD7Sg92uzYIFi1msQ0BYUfRhrUT9OarQCwBumBejHC9XdUzAhhzouwHsoh1U+TVturOPa44DQtp+SYg+N/Pn/PD5LWe53pXhw1fmpM6mttfK7eI6w3B/UzypKDt+Ros4D3fCvVLdHzuPndNfiy9ofuK/dLz8o9OAe3EfeSXU/Fp1ZPw91DjBvBofmM4sA+LVofSQ7fdam3LRxaHta4kkD4baibm6NV2v8oJgfTHfTsrM5y32XycnF4zfKOzM7B+E4Of6xmn6XdlYN+++/IwfmycFjmj3c+XcERNJOqa0NrQn3VzvRUvD5PLLnG
+  </data>
+ </layer>
+ <layer id="20" name="start" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENADAMwzB/0P+/7Zgpu1uQgA5QAgAAALQ5S6/x0cVHl18+gHEBPVwCHQ==
+  </data>
+ </layer>
+ <layer id="18" name="level_four" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJACAMBMH0Y//9+c9PRGLCDNz/NgIAALi10rqa0JEburbo+Mv0jtNV06Hjha6/Mx1QawOFZRiH
+  </data>
+ </layer>
+ <layer id="17" name="level_tree" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzzENAAAIBLG3hX9j7AhggDY5AZcA/FYL+fDhw4ePex8AAABTA8mvLIk=
+  </data>
+ </layer>
+ <layer id="16" name="level_two" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz1EJACAUwMDXzv6NxAh+CEPuYAE2A++ty6p8tPho8dHio8VHi4+WXz4AAODYko0umQ==
+  </data>
+ </layer>
+ <layer id="10" name="wall_coll" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztltENgzAMRP3dfbJGZ2A0RulozUeRUNTE9vkMoeWkSIjIsZ8xByJ5eg7WldSrN5tj1D+kt2dyMGNujphYHN9mroi8toXOr3WmmRxHyMsx6sGZvopweFRnZ3WGQLLUG+mvhwP1dBnsI/NQa16AsFBOLfafObLfc/b3yRPzSxzteuz26/Wqvd+ls9ocXo6eLJ7yqWvZ7pUdB1oH0nP0PDQfg8Pi5QyPH+1F/q00tRxInGcvIvR5aP9faD70mTB65+Hwynr27BxaLmZOlIPplUdyIP5z1blCPWRGDuRshg/OwJEhdk8Y3/Rb+XoD5O5hug==
+  </data>
+ </layer>
+ <layer id="38" name="stop_game_win" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw6ENAAAIA7B9zfuIGSy+TZoAAAAA/MwJANQCAhIBZg==
+  </data>
+ </layer>
+ <layer id="15" name="level_one" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz0kNAAAIwDC84t8DFnhytMkELAIAAADYJBtt4GMWH7Nc+YBvCpWLFOM=
+  </data>
+ </layer>
+ <layer id="22" name="level_one_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0sEJACAMA8Bs49qO4mjqDkKh3kH+CSQBAACAP4xk3VT3oI/zp1nd4YUuOwCqbR28A10=
+  </data>
+ </layer>
+ <layer id="23" name="level_two_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz8ENACAMA7Fs07XYfwo+jABFqmzp/kkCAP0qWb833DDlBwDv1AkAgPk2lDABXQ==
+  </data>
+ </layer>
+ <layer id="24" name="level_tree_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENACAMA0Fvk7UZlYaOFikC7qTv7QQAYFfJ6N5wwis/uEOtAACAP03vYgHd
+  </data>
+ </layer>
+ <layer id="25" name="level_four_close" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJADAIA0C36VruP0X7cARBKneQf/JJBAAA0OFUAPjD++yc7tBhyw6ADS4O0gFd
+  </data>
+ </layer>
+ <layer id="27" name="level_start_one" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0skJACAQA8D0/7YAS7E0LULWgxnIP4EkAAAAAPVaMlb66R472HGPn34FvGcCdSYHeQ==
+  </data>
+ </layer>
+ <layer id="28" name="level_start_two" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJADAIBEH7f6cAS9V3sAATZmDhnhcBAAD84ly9qr/ntAEAYLMCqKwEuQ==
+  </data>
+ </layer>
+ <layer id="29" name="level_start_tree" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt0sEJADAIA0BHdSgH7sMVBIvcQf4JJAIAmFad3O4xwY5/XPoVAADARQ8E5gT5
+  </data>
+ </layer>
+ <layer id="30" name="level_start_four" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzrEJAAAIBLHfv3YgR3MBe0ESuP4SAACAPyrpresvAAD+G8q9B/k=
+  </data>
+ </layer>
+ <layer id="5" name="chest_tree_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKACAIRFFv1f1vFu6kVZsxG/4D1zEGaRG4sUr9ruboyqM8x+FOkksOAJiANxXw1LFTnju/yx8AAKDxcka4zydFPveeYYYNwwAETQ==
+  </data>
+ </layer>
+ <layer id="6" name="chest_two_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1DEKACAIBdCu4/0v2NIUNLSI2XsgOPpBHYNbsep1HTJAVbEVkMfN8Ysuu14pR2x9pdn4kz0EsnT5Nacc/imZJk3HAww=
+  </data>
+ </layer>
+ <layer id="7" name="chest_one_tex" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1rEKACAIRVF/2P9fG4OmjMxX3bM0BT0UzQzQ4ofuZPs5BxBFn+mgFtpWd4taXSNvctPMgM6HE0CNXbMyY+6+Mh9eyYH7VfyN6H9gXgOm8AuA
+  </data>
+ </layer>
+ <layer id="34" name="purple door" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIBLF3g38HSCNoYGBpk9svAbippLfvDwAAAAD4NKOCAc8=
+  </data>
+ </layer>
+ <layer id="35" name="red_door" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw0EJAAAIBLBrY/+Gfi6EwgZLAACAK6YBAIB/FrBhAE8=
+  </data>
+ </layer>
+ <layer id="36" name="purple_key" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt17kJADAMA0Dv7P3BKySFn+JuAiFQoQjol9sBAAAAeObDwX12+k9nTCiCQQHN
+  </data>
+ </layer>
+ <layer id="37" name="red_key" width="50" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1iEBAAAIxMCvTH+DoAAOxF2CySUAAKOuAwAAnvJJAGw0mP8A4w==
+  </data>
+ </layer>
+</map>
